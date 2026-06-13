@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Leaf, Mail, Phone, MapPin } from 'lucide-react';
 import { useLanguage } from '@/lib/LanguageContext';
 
+
 export default function Footer() {
   const { t } = useLanguage();
   const year = new Date().getFullYear();
@@ -103,11 +104,11 @@ export default function Footer() {
               </li>
               <li className="flex items-center space-x-2">
                 <Phone className="h-4 w-4 text-emerald-400 shrink-0" />
-                <span className="text-slate-300 font-medium">+91 95850 05304</span>
+                <span className="text-slate-300 font-medium">{t('contact.info.phone')}</span>
               </li>
               <li className="flex items-center space-x-2">
                 <Mail className="h-4 w-4 text-emerald-400 shrink-0" />
-                <span className="text-slate-300 font-medium">farmerassociation2026@gmail.com</span>
+                <span className="text-slate-300 font-medium">{t('contact.info.emailAddress')}</span>
               </li>
             </ul>
           </div>

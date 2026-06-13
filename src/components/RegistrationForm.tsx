@@ -147,10 +147,12 @@ export default function RegistrationForm() {
       setErrorMsg('Please verify your mobile number before registration.');
       return;
     }
-    if (aadhar && (aadhar.length !== 12 || !/^\d{12}$/.test(aadhar))) {
-      setErrorMsg('ஆதார் எண் 12 இலக்க எண்ணாக இருக்க வேண்டும்.');
-      return;
-    }
+    
+if (!aadhar || aadhar.length !== 12 || !/^\d{12}$/.test(aadhar)) {
+  setErrorMsg('ஆதார் எண் 12 இலக்க எண்ணாக இருக்க வேண்டும்.');
+  return;
+}
+
     if (pin.length !== 4 || !/^\d{4}$/.test(pin)) {
       setErrorMsg('PIN 4 இலக்க எண்களாக இருக்க வேண்டும்.');
       return;
@@ -324,7 +326,7 @@ export default function RegistrationForm() {
 
         {/* Row 3: Aadhaar Number */}
         <div className="space-y-1.5">
-          <label className="text-xs font-bold text-emerald-300 uppercase tracking-wider block">ஆதார் எண் (Aadhaar Number) <span className="text-[10px] text-emerald-500/70 lowercase font-normal">(optional)</span></label>
+          <label className="text-xs font-bold text-emerald-300 uppercase tracking-wider block">ஆதார் எண் (Aadhaar Number)</label>
           <div className="relative">
             <ShieldCheck className="absolute left-3 top-3 h-4 w-4 text-emerald-500/70" />
             <input
@@ -332,6 +334,7 @@ export default function RegistrationForm() {
               value={aadhar}
               onChange={(e) => setAadhar(e.target.value.replace(/\D/g, '').substring(0, 12))}
               maxLength={12}
+              required
               placeholder="12 இலக்க ஆதார் எண்"
               className="w-full pl-10 pr-4 py-2.5 bg-emerald-950/40 border border-emerald-900/80 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500 transition-colors placeholder:text-emerald-700/60"
             />
@@ -414,6 +417,7 @@ export default function RegistrationForm() {
                 accept="image/*"
                 onChange={handlePhotoChange}
                 className="hidden"
+                required
               />
             </div>
           </div>

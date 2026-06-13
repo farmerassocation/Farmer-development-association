@@ -25,7 +25,7 @@ const translations = {
     'footer.farmerReg': 'விவசாயி பதிவு (Farmer Registration)',
     'footer.myDashboard': 'என் கணக்கு (My Dashboard)',
     'footer.addressLabel': 'முகவரி / Address',
-    'footer.address': 'தலைமை அலுவலகம், விவசாய பாதுகாப்பு மற்றும் வளர்ச்சி நல சங்கம், தமிழ்நாடு, இந்தியா.',
+    'footer.address': 'விவசாய பாதுகாப்பு மற்றும் வளர்ச்சி நல சங்கம், 249/1B, ராசி நகர், வேலம்பட்டி, பழனி, திண்டுக்கல்.',
     'footer.copyright': 'விவசாய பாதுகாப்பு மற்றும் வளர்ச்சி நல சங்கம். அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.',
     'footer.slogan': 'விவசாயமே நாட்டின் முதுகெலும்பு',
 
@@ -87,6 +87,8 @@ const translations = {
     'contact.info.address': 'விவசாய பாதுகாப்பு மற்றும் வளர்ச்சி நல சங்கம், 249/1B, ராசி நகர், வேலம்பட்டி, பழனி, திண்டுக்கல்.',
     'contact.info.phoneLabel': 'தொலைபேசி / Phone',
     'contact.info.emailLabel': 'மின்னஞ்சல் / Email',
+    'contact.info.emailAddress': 'farmerassocation6666@gmail.com',
+    'contact.info.phone': '+91 95850 05304',
 
     // Login Form
     'login.title': 'உறுப்பினர் உள்நுழைவு (Login)',
@@ -219,6 +221,8 @@ const translations = {
     'contact.info.address': 'Head Office, Farmers Protection & Development Welfare Association, 12, Anna Salai, Chennai - 600002, Tamil Nadu, India.',
     'contact.info.phoneLabel': 'Phone',
     'contact.info.emailLabel': 'Email',
+    'contact.info.emailAddress': 'farmerassocation6666@gmail.com',
+    'contact.info.phone': '+91 95850 05304',
 
     // Login Form
     'login.title': 'Member Login',

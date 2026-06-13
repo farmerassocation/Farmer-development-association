@@ -1,8 +1,10 @@
 'use client';
 
 import { Phone, Mail, MapPin } from 'lucide-react';
+import { useLanguage } from '@/lib/LanguageContext';
 
 export default function Contact() {
+  const { t } = useLanguage();
   return (
     <div className="bg-slate-950 text-slate-100 min-h-screen py-16 md:py-24">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
@@ -35,7 +37,7 @@ export default function Contact() {
               <Phone className="h-5 w-5 text-emerald-400 shrink-0" />
               <div className="space-y-0.5">
                 <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider block">தொலைபேசி / Phone</span>
-                <p className="text-xs sm:text-sm text-slate-300 font-semibold">+91 95850 05304</p>
+                <p className="text-xs sm:text-sm text-slate-300 font-semibold">{t('contact.info.phone')}</p>
               </div>
             </div>
 
@@ -43,7 +45,7 @@ export default function Contact() {
               <Mail className="h-5 w-5 text-amber-500 shrink-0" />
               <div className="space-y-0.5">
                 <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider block">மின்னஞ்சல் / Email</span>
-                <p className="text-xs sm:text-sm text-slate-300 font-semibold">farmerassociation2026@gmail.com</p>
+                <p className="text-xs sm:text-sm text-slate-300 font-semibold">{t('contact.info.emailAddress')}</p>
               </div>
             </div>
           </div>
