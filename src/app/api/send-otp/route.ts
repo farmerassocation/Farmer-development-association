@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { supabaseAdmin } from '@/lib/supabase';
 
 type SendOtpRequestBody = {
   mobile: string;
@@ -17,6 +18,27 @@ export async function POST(request: Request) {
     if (!mobile || !/^\d{10}$/.test(mobile)) {
       return NextResponse.json(
         { success: false, message: 'Mobile number must be exactly 10 digits.' },
+        { status: 400 }
+      );
+    }
+
+    const { data: existingMember, error: duplicateError } = await supabaseAdmin
+      .from('members')
+      .select('id')
+      .eq('mobile', mobile)
+      .maybeSingle();
+
+    if (duplicateError) {
+      console.error('Mobile duplicate check error:', duplicateError);
+      return NextResponse.json(
+        { success: false, message: 'Unable to verify mobile number availability at this time.' },
+        { status: 500 }
+      );
+    }
+
+    if (existingMember) {
+      return NextResponse.json(
+        { success: false, message: 'Mobile number is already registered. Please log in or use another number.' },
         { status: 400 }
       );
     }

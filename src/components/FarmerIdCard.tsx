@@ -49,77 +49,125 @@ export default function FarmerIdCard({ member }: FarmerIdCardProps) {
     ? `${window.location.origin}/verify/${member.member_id}` 
     : `/verify/${member.member_id}`;
 
-  const handleDownloadPDF = async () => {
-    if (downloading) return;
-    setDownloading(true);
-
-    try {
-      // Lazy load html2canvas and jsPDF to optimize bundle size
-      const html2canvas = (await import('html2canvas')).default;
-      const { jsPDF } = await import('jspdf');
-
-      const cardElement = cardRef.current;
-      if (!cardElement) return;
-
-      // Temporary class to optimize layout for capturing
-      cardElement.classList.add('pdf-capture-mode');
-
-      let canvas;
-      try {
-        canvas = await html2canvas(cardElement, {
-          scale: 2.5, // Crisp resolution
-          useCORS: true, // Allow cross-origin images from Supabase
-          allowTaint: true,
-          backgroundColor: '#022c22', // Match dark forest bg
-          logging: false,
-        });
-      } finally {
-        cardElement.classList.remove('pdf-capture-mode');
-      }
-
-      if (!canvas) {
-        throw new Error('Canvas generation failed');
-      }
-
-      const imgData = canvas.toDataURL('image/jpeg', 0.95);
-      
-      // Card aspect ratio: 2 cards (360x224 each) side-by-side with 24px gap = 744x224
-      const pdf = new jsPDF({
-        orientation: 'landscape',
-        unit: 'mm',
-        format: [210, 297], // A4 Standard
-      });
-
-      // Center it on the A4 landscape sheet (297mm x 210mm)
-      // Card bounding box is approx 220mm wide and 66mm high
-      const width = 240;
-      const height = (width * 224) / 744;
-      const x = (297 - width) / 2;
-      const y = (210 - height) / 2;
-
-      // Add a header/title inside the PDF
-      pdf.setFontSize(14);
-      pdf.setTextColor(2, 44, 34); // emerald-950
-      pdf.text('Farmers Protection and Development Welfare Association', 148.5, 40, { align: 'center' });
-      pdf.setFontSize(10);
-      pdf.text('விவசாய பாதுகாப்பு மற்றும் வளர்ச்சி நல சங்கம்', 148.5, 46, { align: 'center' });
-
-      // Draw membership card image
-      pdf.addImage(imgData, 'JPEG', x, y, width, height);
-
-      // Footer notice in PDF
-      pdf.setFontSize(8);
-      pdf.setTextColor(100, 116, 139);
-      pdf.text('This is a digital membership ID card. Please scan the QR code to verify details online.', 148.5, y + height + 15, { align: 'center' });
-
-      pdf.save(`Farmer_ID_${member.member_id}.pdf`);
-    } catch (err) {
-      console.error('Failed to generate PDF:', err);
-      alert('PDF பதிவிறக்கம் செய்யத் தவறியது. மீண்டும் முயற்சிக்கவும்.');
-    } finally {
-      setDownloading(false);
+  const copyComputedStyle = (source: HTMLElement, target: HTMLElement) => {
+    const computed = window.getComputedStyle(source);
+    let cssText = '';
+    for (const property of Array.from(computed)) {
+      cssText += `${property}:${computed.getPropertyValue(property)};`;
     }
+    target.style.cssText = cssText;
   };
+
+  const cloneWithInlineStyles = (source: HTMLElement) => {
+    const clone = source.cloneNode(true) as HTMLElement;
+
+    const traverseElements = (original: HTMLElement, copy: HTMLElement) => {
+      copyComputedStyle(original, copy);
+
+      const originalChildren = Array.from(original.children) as HTMLElement[];
+      const copyChildren = Array.from(copy.children) as HTMLElement[];
+
+      originalChildren.forEach((child, index) => {
+        const copyChild = copyChildren[index];
+        if (child instanceof HTMLElement && copyChild instanceof HTMLElement) {
+          traverseElements(child, copyChild);
+        }
+      });
+    };
+
+    traverseElements(source, clone);
+    return clone;
+  };
+
+  const disableAllStyleSheets = () => {
+    const disabledSheets: CSSStyleSheet[] = [];
+
+    for (const sheet of Array.from(document.styleSheets) as CSSStyleSheet[]) {
+      try {
+        if (sheet.disabled) continue;
+        sheet.disabled = true;
+        disabledSheets.push(sheet);
+      } catch {
+        continue;
+      }
+    }
+
+    return disabledSheets;
+  };
+
+  const restoreStyleSheets = (sheets: CSSStyleSheet[]) => {
+    sheets.forEach((sheet) => {
+      sheet.disabled = false;
+    });
+  };
+
+  const handleDownloadPDF = async () => {
+  if (downloading) return;
+  setDownloading(true);
+
+  try {
+    const { toJpeg } = await import('html-to-image');
+    const { jsPDF } = await import('jspdf');
+
+    const node = cardRef.current;
+    if (!node) return;
+
+    // IMPORTANT: ensure images are loaded before capture
+    await new Promise((res) => setTimeout(res, 500));
+
+    const dataUrl = await toJpeg(node, {
+      quality: 0.95,
+      pixelRatio: 2,
+      cacheBust: true,
+      backgroundColor: '#022c22',
+      skipFonts: false,
+    });
+
+    const pdf = new jsPDF({
+      orientation: 'landscape',
+      unit: 'mm',
+      format: 'a4',
+    });
+
+    const width = 240;
+    const height = (width * 224) / 744;
+
+    const x = (297 - width) / 2;
+    const y = (210 - height) / 2;
+
+    pdf.setFontSize(14);
+    pdf.setTextColor(2, 44, 34);
+    pdf.text(
+      'Farmers Protection and Development Welfare Association',
+      148.5,
+      40,
+      { align: 'center' }
+    );
+
+    pdf.setFontSize(10);
+    pdf.text('விவசாய பாதுகாப்பு மற்றும் வளர்ச்சி நல சங்கம்', 148.5, 46, {
+      align: 'center',
+    });
+
+    pdf.addImage(dataUrl, 'JPEG', x, y, width, height);
+
+    pdf.setFontSize(8);
+    pdf.setTextColor(100, 116, 139);
+    pdf.text(
+      'This is a digital membership ID card. Please scan the QR code to verify details online.',
+      148.5,
+      y + height + 15,
+      { align: 'center' }
+    );
+
+    pdf.save(`Farmer_ID_${member.member_id}.pdf`);
+  } catch (err) {
+    console.error('PDF error:', err);
+    alert('PDF download failed');
+  } finally {
+    setDownloading(false);
+  }
+};
 
   const handlePrint = () => {
     window.print();
