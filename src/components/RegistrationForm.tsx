@@ -457,6 +457,11 @@ if (!aadhar || aadhar.length !== 12 || !/^\d{12}$/.test(aadhar)) {
             </div>
           </div>
         </div>
+        {/* ✅ PIN WARNING MESSAGE */}
+<div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl text-[11px] text-amber-300">
+  ⚠️ தயவுசெய்து உங்கள் PIN எண்ணை நினைவில் வைத்துக்கொள்ளவும். 
+  நீங்கள் இந்த PIN-ஐ தனியாக மாற்ற / Reset செய்ய முடியாது.
+</div>
 
         {/* Submit */}
         <button

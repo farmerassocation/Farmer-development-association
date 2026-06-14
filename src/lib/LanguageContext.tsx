@@ -218,7 +218,7 @@ const translations = {
     'contact.success': 'Your message has been sent successfully. Our team will contact you shortly!',
     'contact.info.title': 'Head Office Contact',
     'contact.info.addressLabel': 'Address',
-    'contact.info.address': 'Head Office, Farmers Protection & Development Welfare Association, 12, Anna Salai, Chennai - 600002, Tamil Nadu, India.',
+    'contact.info.address': 'Farmers Protection & Development Welfare Association, 249/1B, Rasi Nagar, Velampatti, Palani, Dindigul, Tamil Nadu, India.',
     'contact.info.phoneLabel': 'Phone',
     'contact.info.emailLabel': 'Email',
     'contact.info.emailAddress': 'farmerassocation6666@gmail.com',
