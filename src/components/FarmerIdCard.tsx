@@ -165,7 +165,7 @@ const { t } = useLanguage();
         <div className="absolute inset-0 bg-[radial-gradient(#065f46_1px,transparent_1px)] [background-size:16px_16px] opacity-10 pointer-events-none"></div>
 
         {/* ==================== FRONT SIDE ==================== */}
-        <div className="w-[360px] min-h-[224px] bg-gradient-to-br from-emerald-900 to-emerald-950 border-2 border-amber-500/80 rounded-xl relative p-3 flex flex-col justify-between shadow-lg shrink-0 overflow-visible select-none">
+        <div className="w-[360px] h-[240px] bg-gradient-to-br from-emerald-900 to-emerald-950 border-2 border-amber-500/80 rounded-xl relative p-3 flex flex-col justify-between shadow-lg shrink-0 overflow-visible select-none">
           {/* Subtle gold ribbon in corner */}
           <div className="absolute top-0 right-0 w-16 h-16 bg-amber-500 rotate-45 translate-x-8 -translate-y-8 opacity-20 pointer-events-none"></div>
           
@@ -187,6 +187,9 @@ const { t } = useLanguage();
               </span>
               <span className="text-[7.5px] text-emerald-300 font-semibold uppercase tracking-wider mt-0.5">
                 Farmers Protection and Development Welfare Association
+              </span>
+               <span className="font-extrabold text-[8px] text-amber-400 tracking-wide leading-none mt-0.5">
+                உலகம் அழியும் வரை அழியாத ஒரே தொழில் விவசாயம்
               </span>
             </div>
           </div>
@@ -271,7 +274,7 @@ const { t } = useLanguage();
         </div>
 
         {/* ==================== BACK SIDE ==================== */}
-        <div className="w-[360px] min-h-[224px] bg-gradient-to-br from-emerald-950 to-emerald-900 border-2 border-amber-500/80 rounded-xl relative p-3 flex flex-col justify-between shadow-lg shrink-0 overflow-visible select-none">
+        <div className="w-[360px] h-[240px] bg-gradient-to-br from-emerald-950 to-emerald-900 border-2 border-amber-500/80 rounded-xl relative p-3 flex flex-col justify-between shadow-lg shrink-0 overflow-visible select-none">
           <div className="absolute top-0 left-0 w-16 h-16 bg-emerald-800 rotate-45 -translate-x-8 -translate-y-8 opacity-25 pointer-events-none"></div>
 
           {/* Back Details Grid */}
@@ -307,11 +310,11 @@ const { t } = useLanguage();
         Association Details
       </div>
 
-      <div className="grid grid-cols-[55px_8px_auto] ">
-        <span className="text-emerald-300">Address</span>
-        <span>:</span>
-        <span>{t('contact.info.address')}</span>
-      </div>
+      <div className="grid grid-cols-[55px_8px_auto] items-start">
+  <span>Address</span>
+  <span>:</span>
+  <span className="leading-tight">{t('contact.info.address')} </span>
+</div>
 
       <div className="grid grid-cols-[55px_8px_auto] ">
         <span className="text-emerald-300">Number</span>
@@ -330,11 +333,9 @@ const { t } = useLanguage();
   </div>
 
   {/* ✅ RIGHT SIDE QR */}
-  <div className="flex flex-col items-center bg-white p-1 rounded-lg shadow-md border border-amber-500/25">
-    <QRCodeComponent value={verificationUrl} size={72} />
-    <span className="text-[6px] text-emerald-950 font-bold mt-1">
-      VERIFY ONLINE
-    </span>
+  <div className="flex flex-col items-center bg-white p-1 rounded-lg self-start">
+    <QRCodeComponent value={verificationUrl} size={60} />
+    
   </div>
 
 </div>
@@ -343,43 +344,40 @@ const { t } = useLanguage();
           <div className="my-1.5 border-t border-b border-emerald-800 py-1 text-[6.5px] text-slate-300 leading-normal space-y-0.5">
             <p>1. இந்த அட்டை சங்கத்தின் அதிகாரப்பூர்வ உறுப்பினர்களுக்கு மட்டுமே சொந்தமானது.</p>
             <p>2. அட்டை தொலைந்து போனால் உடனடியாக தலைமை அலுவலகத்திற்கு தெரிவிக்கவும்.</p>
-            <p>3. அட்டை விவரங்களை சரிபார்க்க மேலே உள்ள QR குறியீட்டை ஸ்கேன் செய்யவும்.</p>
-          </div>
+              </div>
 
           {/* Back Footer */}
    <div className="flex justify-between w-full text-[6px] text-emerald-300">
 
-  {/* Treasurer */}
+  
+  {/* President */}
   <div className="flex flex-col items-center">
     <img
-      src="/porulaalar.png"
-      alt="Treasurer Sign"
-      className="h-3 object-contain mb-1"
+      src="/thalaivar-sign.png"
+      alt="President Sign"
+      className="h-6 w-16 object-contain mb"
     />
-    <div className="border-b border-dashed w-14 mb-0.5"></div>
-    <span>பொருளாளர்</span>
+    <span>தலைவர்</span>
   </div>
 
   {/* Secretary */}
   <div className="flex flex-col items-center">
     <img
-      src="/seyalalar.png"
+      src="/seyalalar-sign.png"
       alt="Secretary Sign"
-      className="h-3 object-contain mb-1"
+      className="h-6 w-16 object-contain "
     />
-    <div className="border-b border-dashed w-14 mb-0.5"></div>
     <span>செயலாளர்</span>
   </div>
 
-  {/* President */}
+  {/* Treasurer */}
   <div className="flex flex-col items-center">
     <img
-      src="/thalaivar.png"
-      alt="President Sign"
-      className="h-3 object-contain mb-1"
+      src="/porulaalar-sign.png"
+      alt="Treasurer Sign"
+      className="h-6 w-16 object-contain"
     />
-    <div className="border-b border-dashed w-14 mb-0.5"></div>
-    <span>தலைவர்</span>
+    <span>பொருளாளர்</span>
   </div>
 
 </div>
