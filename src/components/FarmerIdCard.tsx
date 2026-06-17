@@ -113,10 +113,10 @@ const { t } = useLanguage();
     if (!node) return;
 
     await new Promise((res) => setTimeout(res, 500));
-
-    // ✅ capture EXACT SIZE (no compression)
-    const width = node.scrollWidth;
-    const height = node.scrollHeight + 40; // small buffer
+    // ✅ Force proper width for BOTH cards (desktop fix)
+      const rect = node.getBoundingClientRect();
+      const width = rect.width;
+      const height = rect.height;
 
     const dataUrl = await toJpeg(node, {
       quality: 1,
@@ -126,10 +126,9 @@ const { t } = useLanguage();
       width,
       height,
     });
-
     // ✅ IMPORTANT: use PX, not mm
     const pdf = new jsPDF({
-      orientation: "portrait",
+      orientation: width > height ? "landscape" : "portrait",
       unit: "px",          // ✅ FIX
       format: [width, height], // ✅ EXACT SIZE
     });

@@ -11,6 +11,7 @@ type User = {
   aadhar_number?: string;
   taluk?: string;
   village?: string;
+  status?: "Printed" | "Not Printed";
 };
 
 
@@ -55,6 +56,13 @@ export default function AdminPage() {
     u.name?.toLowerCase().includes(search.toLowerCase()) ||
     u.mobile?.includes(search)
   ); 
+
+  
+function viewId(memberId: string) {
+  window.open(`/admin/id-card/${memberId}`, "_blank");
+}
+
+
   // ✅ Reset PIN
   async function resetPin(userId: number)  {
     const newPin = prompt("Enter new 4-digit PIN");
@@ -63,7 +71,6 @@ export default function AdminPage() {
       alert("Invalid PIN ❌");
       return;
     }
-
     const res = await fetch("/api/admin/reset-password", {
       method: "POST",
       headers: {
@@ -78,7 +85,7 @@ export default function AdminPage() {
       alert("Error updating PIN ❌");
     }
   }
-
+  
   if (!isAdmin) {
   return (
     <div className="min-h-screen flex items-center justify-center text-white">
@@ -126,7 +133,10 @@ export default function AdminPage() {
                     <th className="p-3 text-left">Aadhar</th>
                     <th className="p-3 text-left">Taluk</th>
                     <th className="p-3 text-left">Village</th>
+                    <th className="p-3 text-left">View ID</th>
+                    <th className="p-3 text-left">Status</th>
                     <th className="p-3 text-left">Action</th>
+
                 </tr>
 </thead>
 
@@ -149,6 +159,48 @@ export default function AdminPage() {
       <td className="p-3">{u.taluk}</td>
 
       <td className="p-3">{u.village}</td>
+
+      <td className="p-3">
+        <button
+          onClick={() => viewId(u.member_id)}
+          className="px-3 py-1 bg-amber-500 text-emerald-950 rounded"
+        >
+          View ID
+        </button>
+      </td>
+
+      <td className="p-3">
+  <select
+    value={u.status || "Not Printed"}
+    onChange={async (e) => {
+      const newStatus = e.target.value as "Printed" | "Not Printed";
+
+
+      await fetch("/api/admin/update-status", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: u.id,
+          status: newStatus,
+        }),
+      });
+
+      // ✅ update UI
+      setUsers((prev) =>
+        prev.map((user) =>
+          user.id === u.id ? { ...user, status: newStatus } : user
+        )
+      );
+    }}
+    className="bg-emerald-900 border border-emerald-700 rounded px-2 py-1 text-sm"
+  >
+    <option value="Not Printed">Not Printed</option>
+    <option value="Printed">Printed</option>
+  </select>
+</td>
+
 
       <td className="p-3">
         <button
