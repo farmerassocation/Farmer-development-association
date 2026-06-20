@@ -184,9 +184,17 @@ const { t } = useLanguage();
               <span className="font-extrabold text-[9px] text-amber-400 tracking-wide leading-none">
                 விவசாய பாதுகாப்பு மற்றும் வளர்ச்சி நல சங்கம்
               </span>
-              <span className="text-[7.5px] text-emerald-300 font-semibold uppercase tracking-wider mt-0.5">
-                Farmers Protection and Development Welfare Association
+              
+              <span className="text-[7px] text-amber-400 mt-1">
+                Reg No: SRG/Palani/20/2026
+                <span className="text-[6.5px] text-emerald-300 ml-1">
+                  (Registered under TN Societies Act, 1975)
+                </span>
               </span>
+
+              {/* <span className="text-[7.5px] text-emerald-300 font-semibold uppercase tracking-wider mt-0.5">
+                Farmers Protection and Development Welfare Association
+              </span> */}
                <span className="font-extrabold text-[8px] text-amber-400 tracking-wide leading-none mt-0.5">
                 உலகம் அழியும் வரை அழியாத ஒரே தொழில் விவசாயம்
               </span>
@@ -221,24 +229,35 @@ const { t } = useLanguage();
       <div className="flex-1 pl-2 text-white">
 
   {/* ✅ Member ID separate */}
-  <div className="mb-1">
+  <div className="-mt-3">
+    <span className="text-[7px] text-emerald-300">Name</span>
+    <div className="text-[11px] font-semibold leading-tight break-words">{member.name}</div>
+  </div>
+  {/* <div className="mb-1">
     <span className="text-[7px] text-emerald-300">Member ID</span>
     <div className="text-[14px] font-bold text-amber-300">
       {member.member_id}
     </div>
-  </div>
+  </div> */}
 
   {/* ✅ Grid ONLY for rest */}
   <div className="grid grid-cols-2 gap-y-1.5">
 
   {/* Name */}
-  <div className="-mt-3">
+  {/* <div className="-mt-3">
     <span className="text-[7px] text-emerald-300">Name</span>
-    <div className="text-[11px] font-semibold">{member.name}</div>
+    <div className="text-[11px] font-semibold leading-tight break-words">{member.name}</div>
+  </div> */}
+
+  <div className="mb-1">
+    <span className="text-[7px] text-emerald-300">Member ID</span>
+    <div className="text-[11px] font-bold text-amber-300">
+      {member.member_id}
+    </div>
   </div>
 
   {/* Mobile */}
-  <div className="-mt-3">
+  <div className="-mb-1">
     <span className="text-[7px] text-emerald-300">Mobile</span>
     <div className="text-[11px] font-semibold">{member.mobile}</div>
   </div>

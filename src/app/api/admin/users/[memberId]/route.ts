@@ -14,7 +14,6 @@ export async function GET(
     .select("*")
     .eq("member_id", memberId.trim());
 
-  console.log("QUERY RESULT:", data);
 
   if (error || !data || data.length === 0) {
     return NextResponse.json(

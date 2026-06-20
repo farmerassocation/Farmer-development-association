@@ -7,7 +7,6 @@ export const revalidate = 0; // Disable server caching for real-time updates
 
 export default async function DashboardPage() {
   const session = await getSession();
-
   // Redirect if not authenticated (though middleware also protects this, server checks are definitive)
   if (!session) {
     redirect('/login');
